@@ -29,7 +29,6 @@ function evaluateChoice(choice) {
 
 function getPlayerChoice() {
   let choice = parseInt(prompt("1. Rock, 2. Paper, 3. Scissor"));
-
   return evaluateChoice(choice);
 }
 
@@ -38,4 +37,54 @@ function getComputerChoice() {
   return evaluateChoice(Math.floor(Math.random() * 3 + 1));
 }
 
-console.log(getPlayerChoice());
+function getWinner(playerChoice, computerChoice) {
+  if (playerChoice === undefined && computerChoice === undefined) {
+    console.log("Invalid choices");
+    return;
+  } else if (computerChoice === "rock" && playerChoice === "paper") {
+    return 1; // 1 means player won the round
+  } else if (computerChoice === "rock" && playerChoice == "scissor") {
+    return 0; // 0 means computer won the round
+  } else if (computerChoice === "paper" && playerChoice == "rock") {
+    return 0; // 0 means computer won the round
+  } else if (computerChoice === "scissor" && playerChoice == "paper") {
+    return 0; // 0 means computer won the round
+  } else if (computerChoice === "paper" && playerChoice == "scissor") {
+    return 1; // 0 means computer won the round
+  } else if (computerChoice === "scissor" && playerChoice == "rock") {
+    return 1; // 0 means computer won the round
+  } else {
+    console.log("It's draw");
+      return 2;
+  }
+}
+
+function playRound(playerChoice, computerChoice) {
+  console.log("Player choice: " + playerChoice, "Computer choice: " + computerChoice);
+  return getWinner(playerChoice, computerChoice);
+}
+
+function playGame() {
+  for (let i = 0; i < 1; i++) {
+    let winner = playRound(getPlayerChoice(), getComputerChoice());
+    console.log(winner);
+    switch(winner) {
+      case 0:
+        console.log("Computer won this round");
+        computerScore += 1;
+        console.log(`Player score: ${playerScore} and Computer score: ${computerScore}`);
+        break;
+      case 1:
+        console.log("Player won this round");
+        playerScore += 1;
+        console.log(`Player score: ${playerScore} and Computer score: ${computerScore}`);
+        break;
+      case 2:
+        console.log("It's a draw for this round");
+        console.log(`Player score: ${playerScore} and Computer score: ${computerScore}`);
+        break;
+    }
+  }
+}
+
+playGame();
