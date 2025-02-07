@@ -38,7 +38,7 @@ function getComputerChoice() {
   return evaluateChoice(Math.floor(Math.random() * 3 + 1));
 }
 
-function getWinner(playerChoice, computerChoice) {
+function evaluateWinner(playerChoice, computerChoice) {
   if (playerChoice === undefined && computerChoice === undefined) {
     console.log("Invalid choices");
     return;
@@ -62,7 +62,7 @@ function getWinner(playerChoice, computerChoice) {
 
 function playRound(playerChoice, computerChoice) {
   console.log("Player choice: " + playerChoice, "Computer choice: " + computerChoice);
-  return getWinner(playerChoice, computerChoice);
+  return evaluateWinner(playerChoice, computerChoice);
 }
 
 function playGame() {
