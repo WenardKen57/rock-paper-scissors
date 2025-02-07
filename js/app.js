@@ -5,6 +5,7 @@
 
 let playerScore = 0;
 let computerScore = 0;
+const NUM_ROUNDS = 5;
 
 function evaluateChoice(choice) {
   if (isNaN(choice)) {
@@ -65,7 +66,7 @@ function playRound(playerChoice, computerChoice) {
 }
 
 function playGame() {
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < NUM_ROUNDS; i++) {
     let winner = playRound(getPlayerChoice(), getComputerChoice());
     console.log(winner);
     switch(winner) {
