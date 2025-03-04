@@ -7,6 +7,12 @@ let playerScore = 0;
 let computerScore = 0;
 const NUM_ROUNDS = 5;
 
+const container = document.querySelector("#container");
+
+const rockButton = document.createElement("button");
+const scissorButton = document.createElement("button");
+const paperButton = document.createElement("button");
+
 function evaluateChoice(choice) {
   if (isNaN(choice)) {
     // Player enters letter
@@ -66,26 +72,9 @@ function playRound(playerChoice, computerChoice) {
 }
 
 function playGame() {
-  for (let i = 0; i < NUM_ROUNDS; i++) {
-    let winner = playRound(getPlayerChoice(), getComputerChoice());
-    console.log(winner);
-    switch(winner) {
-      case 0:
-        console.log("Computer won this round");
-        computerScore += 1;
-        console.log(`Player score: ${playerScore} and Computer score: ${computerScore}`);
-        break;
-      case 1:
-        console.log("Player won this round");
-        playerScore += 1;
-        console.log(`Player score: ${playerScore} and Computer score: ${computerScore}`);
-        break;
-      case 2:
-        console.log("It's a draw for this round");
-        console.log(`Player score: ${playerScore} and Computer score: ${computerScore}`);
-        break;
-    }
-  }
+  
 }
+
+
 
 playGame();
