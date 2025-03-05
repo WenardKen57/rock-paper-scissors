@@ -8,6 +8,7 @@ let computerScore = 0;
 const NUM_ROUNDS = 5;
 
 const container = document.querySelector("#container");
+const gameWinner = document.querySelector(".gameWinner");
 
 const rockButton = document.createElement("button");
 const scissorButton = document.createElement("button");
@@ -21,6 +22,12 @@ const scoreDisplay = document.createElement("h2");
 rockButton.setAttribute("id", "rock");
 paperButton.setAttribute("id", "paper");
 scissorButton.setAttribute("id", "scissor");
+
+rockButton.classList.toggle("selectionButton");
+paperButton.classList.toggle("selectionButton");
+scissorButton.classList.toggle("selectionButton");
+
+buttonContainer.setAttribute("id", "buttonContainer");
 
 rockButton.textContent = "Rock";
 paperButton.textContent = "Paper";
@@ -49,6 +56,10 @@ function getComputerChoice() {
 
 function playRound(playerChoice, computerChoice) {
   scoreDisplay.textContent = `Player ${playerScore} || Computer ${computerScore}`;
+  if (playerScore >= 5 || computerScore >= 5) {
+    (playerScore > computerScore) ? gameWinner.textContent = "Player won!" :
+    gameWinner.textContent = "Computer won";
+  }
   if (computerChoice === "rock" && playerChoice === "paper") {
     winnerDisplay.textContent = "Player won this round!";
     playerScore += 1;
@@ -73,15 +84,9 @@ function playRound(playerChoice, computerChoice) {
   }
 }
 
-buttonContainer.appendChild(rockButton);
-buttonContainer.appendChild(paperButton);
-buttonContainer.appendChild(scissorButton);
-container.appendChild(buttonContainer);
-container.appendChild(winnerDisplay);
-container.appendChild(scoreDisplay);
 
 function playGame() {
-
+  
   container.addEventListener("click", (event) => {
     let target = event.target;
     
@@ -101,11 +106,13 @@ function playGame() {
   });
 }
 
+buttonContainer.appendChild(rockButton);
+buttonContainer.appendChild(paperButton);
+buttonContainer.appendChild(scissorButton);
+container.appendChild(buttonContainer);
+container.appendChild(winnerDisplay);
+container.appendChild(scoreDisplay);
 
 playGame();
 
-if (playerScore >= 5 || computerScore >= 5) {
-  (playerScore > computerScore) ? winnerDisplay.textContent = "Player won!" :
-  winnerDisplay.textContent = "Computer won";
-}
 
