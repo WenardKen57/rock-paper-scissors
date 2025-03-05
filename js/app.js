@@ -12,69 +12,100 @@ const container = document.querySelector("#container");
 const rockButton = document.createElement("button");
 const scissorButton = document.createElement("button");
 const paperButton = document.createElement("button");
+const buttonContainer = document.createElement("div");
+const playNextRound = document.createElement("button");
 
-function evaluateChoice(choice) {
-  if (isNaN(choice)) {
-    // Player enters letter
-    console.log("Please enter a valid number (1-3 only)");
-    return;
-  } else {
-    switch (choice) {
-      case 1:
-        return "rock";
-      case 2:
-        return "paper";
-      case 3:
-        return "scissor";
-      default:
-        // Player enters a number below or beyond the required choice
-        console.log("Please enter a valid number (1-3 only)");
-        return;
-    }
-  }
-}
+const winnerDisplay = document.createElement("h1");
+const scoreDisplay = document.createElement("h2");
 
-function getPlayerChoice() {
-  let choice = parseInt(prompt("1. Rock, 2. Paper, 3. Scissor"));
-  return evaluateChoice(choice);
+rockButton.setAttribute("id", "rock");
+paperButton.setAttribute("id", "paper");
+scissorButton.setAttribute("id", "scissor");
+
+rockButton.textContent = "Rock";
+paperButton.textContent = "Paper";
+scissorButton.textContent = "Scissor";
+playNextRound.textContent = "Play next round";
+
+
+function generateRandomNumber() {
+  return Math.floor(Math.random() * 3 + 1);
 }
 
 // returns random "rock", "paper", or "scissors"
 function getComputerChoice() {
-  return evaluateChoice(Math.floor(Math.random() * 3 + 1));
-}
 
-function evaluateWinner(playerChoice, computerChoice) {
-  if (playerChoice === undefined && computerChoice === undefined) {
-    console.log("Invalid choices");
-    return;
-  } else if (computerChoice === "rock" && playerChoice === "paper") {
-    return 1; // 1 means player won the round
-  } else if (computerChoice === "rock" && playerChoice == "scissor") {
-    return 0; // 0 means computer won the round
-  } else if (computerChoice === "paper" && playerChoice == "rock") {
-    return 0; // 0 means computer won the round
-  } else if (computerChoice === "scissor" && playerChoice == "paper") {
-    return 0; // 0 means computer won the round
-  } else if (computerChoice === "paper" && playerChoice == "scissor") {
-    return 1; // 0 means computer won the round
-  } else if (computerChoice === "scissor" && playerChoice == "rock") {
-    return 1; // 0 means computer won the round
-  } else {
-    console.log("It's draw");
-      return 2;
+  switch (generateRandomNumber()) {
+    case 1:
+      return "rock"
+    case 2:
+      return "paper";
+    case 3:
+      return "scissor";
+    default:
+      break;
   }
 }
 
 function playRound(playerChoice, computerChoice) {
-  console.log("Player choice: " + playerChoice, "Computer choice: " + computerChoice);
-  return evaluateWinner(playerChoice, computerChoice);
+  scoreDisplay.textContent = `Player ${playerScore} || Computer ${computerScore}`;
+  if (computerChoice === "rock" && playerChoice === "paper") {
+    winnerDisplay.textContent = "Player won this round!";
+    playerScore += 1;
+  } else if (computerChoice === "rock" && playerChoice == "scissor") {
+    winnerDisplay.textContent = "Computer won this round!";
+    computerScore += 1;
+  } else if (computerChoice === "paper" && playerChoice == "rock") {
+    winnerDisplay.textContent = "Computer won this round!";
+    computerScore += 1;
+  } else if (computerChoice === "scissor" && playerChoice == "paper") {
+    winnerDisplay.textContent = "Computer won this round!";
+    computerScore += 1;
+  } else if (computerChoice === "paper" && playerChoice == "scissor") {
+    winnerDisplay.textContent = "Player won this round!";
+    playerScore += 1;
+  } else if (computerChoice === "scissor" && playerChoice == "rock") {
+    winnerDisplay.textContent = "Player won this round!";
+    playerScore += 1;
+  } else {
+    winnerDisplay.textContent = "It's a draw";
+    return;
+  }
 }
+
+buttonContainer.appendChild(rockButton);
+buttonContainer.appendChild(paperButton);
+buttonContainer.appendChild(scissorButton);
+container.appendChild(buttonContainer);
+container.appendChild(winnerDisplay);
+container.appendChild(scoreDisplay);
 
 function playGame() {
-  
-}
 
+  container.addEventListener("click", (event) => {
+    let target = event.target;
+    
+    switch(target.id) {
+      case "rock":
+        playRound("rock", getComputerChoice());
+        break; 
+      case "paper":
+        playRound("paper", getComputerChoice());
+        break;
+      case "scissor":
+        playRound("scissor", getComputerChoice());
+        break;
+      default:
+        break;
+    }
+  });
+}
 
 
 playGame();
+
+if (playerScore >= 5 || computerScore >= 5) {
+  (playerScore > computerScore) ? winnerDisplay.textContent = "Player won!" :
+  winnerDisplay.textContent = "Computer won";
+}
+
